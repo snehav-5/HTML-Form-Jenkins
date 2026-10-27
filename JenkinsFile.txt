@@ -1,0 +1,27 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Automated HTML Form Tests') {
+            steps {
+                bat 'python test_form.py'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'All HTML form tests passed!'
+        }
+        failure {
+            echo 'Build or tests failed. Check the console output.'
+        }
+    }
+}
